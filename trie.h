@@ -1,8 +1,12 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <string>
+#include <iostream>
 
 #define ALPHABET_SIZE 62
+
+using namespace std;
 
 class Trie{
 	private:
@@ -24,18 +28,22 @@ class Trie{
 		void insert(string word){
 			node * current = head;
 			current-> prefix_count++;
-			for (unsigned int i=0;i<word.length();++i){
+			cout << "31: " << endl;
+			for (int i=0;i<word.length();++i){
+				cout << "37: " << endl;
 				int letter = char2index(word[i]);	//TODO: here should modify to 62 character
-				if(current -> child[letter]) == NULL)
+				if((current -> child[letter]) == NULL)
 					current->child[letter] = new node();
-				current->child[letter]->prefix_count++
+				current->child[letter]->prefix_count++;
 				current = current -> child[letter];
 			}
+
+			cout << "40: " << endl;
 			current->is_end = true;
 		}
 		bool search (string word){
 			node * current = head;
-			for(unsigned int i=0; i< word.length(); ++i){
+			for(int i=0; i< word.length(); ++i){
 				if(current->child[char2index(word[i])]==NULL) return false;
 				current = current -> child[char2index(word[i])];
 			}
@@ -45,4 +53,4 @@ class Trie{
 			return -1;
 			//now i don't think that we need this, maybe try it later.
 		}
-}
+};
