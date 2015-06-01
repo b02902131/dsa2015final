@@ -8,6 +8,7 @@
 
 #include "trie.h"
 #include "account.h"
+#include "md5.h"
 
 using namespace std;
 
@@ -24,7 +25,6 @@ int get_next_Id(){
 }
 
 int main(){
-
 	//initial id queue, trie
 	id_queue.push(0);
 	trie.init();
@@ -49,7 +49,7 @@ int main(){
 			pwd.assign(tmp);
 			int key = trie.search(ID);
 			if(key >= 0) {
-				if(account[key].pwd == pwd) {
+				if(account[key].pwd == md5(pwd)) {
 					login_id = key;
 					cout << "success" << endl;
 				}
@@ -74,7 +74,7 @@ int main(){
 				//successful create operation
 				int key = get_next_Id();
 				trie.insert(ID, key);
-				Account temp(pwd);
+				Account temp(md5(pwd));
 				if(key>=account.size()) account.push_back(temp);
 				else account[key] = temp;
 				cout << "success" << endl;
@@ -88,7 +88,7 @@ int main(){
 			pwd.assign(tmp);
 			int key = trie.search(ID);
 			if(key >= 0) {
-				if(account[key].pwd == pwd) {
+				if(account[key].pwd == md5(pwd)) {
 					trie.remove(ID);
 					cout << "success" << endl;
 				}
