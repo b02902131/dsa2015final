@@ -56,14 +56,22 @@ int main(){
 		}
 		else if(strcmp(tmp, "deposit")==0){
 			//deposit [num]
+			tmp = strtok(NULL, ": ");
+			num = atoi(tmp);
 			cout << "deposit [num]" << endl;
 		}
 		else if(strcmp(tmp, "withdraw")==0){
 			//withdraw [num]
+			tmp = strtok(NULL, ": ");
+			num = atoi(tmp);
 			cout << "withdraw [num]" << endl;
 		}
 		else if(strcmp(tmp, "transfer")==0){
 			//transfer [ID] [num]
+			tmp = strtok(NULL, ": ");
+			ID.assign(tmp);
+			tmp = strtok(NULL, ": ");
+			num = atoi(tmp);
 			cout << "transfer [ID] [num]" << endl;
 		}
 		else if(strcmp(tmp, "find")==0){

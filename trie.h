@@ -68,6 +68,7 @@ class Trie{
 			//set the position: key = -1;
 			current->key=-1;
 			//return the key
+			return key;
 		}
 		int words_with_prefix(string prefix){
 			return -1;
