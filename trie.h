@@ -46,7 +46,6 @@ class Trie{
 			}
 			current->key = key;
 		}
-		//TODO: now returns bool, i will change it to return some data
 		int search (string word){
 			node * current = head;
 			for(int i=0; i< word.length(); ++i){
@@ -55,7 +54,7 @@ class Trie{
 			}
 			return current->key;
 		}
-		//TODO: add remove function
+		//remove function
 		int remove(string word){
 			//find position and key
 			node * current = head;
@@ -69,7 +68,6 @@ class Trie{
 			//set the position: key = -1;
 			current->key=-1;
 			//return the key
-			return key;
 		}
 		int words_with_prefix(string prefix){
 			return -1;
