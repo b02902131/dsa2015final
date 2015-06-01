@@ -4,19 +4,27 @@
 using namespace std;
 
 class Account{
-	private:
-		unsigned long long int money; 
-		BinomialHeap<pair<string, string> > transaction_history;
-
 	public:
-		string pwd;	//we can put it into private and write another public function to get it
+		BinomialHeap<pair<string, string> > transaction_history;
+		long long int money; 
+		string pwd;	
+
 		Account(string password){
 			money =0;
 			pwd = password;
 		}
 
 		//deposit
-
+		long long int deposit(long long int num){	//return current money
+			money += num;
+			return money;
+		}
 		//withdraw
+		long long int withdraw(long long int num){	//return current money or -1 for fail
+			money -= num;
+			return money;
+
+		}
+
 		//merges
 };

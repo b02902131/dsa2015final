@@ -31,7 +31,7 @@ int main(){
 
 	// declare
 	string ID, ID1, ID2, pwd, pwd1, pwd2, wildID;
-	int num;
+	long long int num;
 	string istring;
 
 	//while loop
@@ -110,27 +110,70 @@ int main(){
 			ID2.assign(tmp);
 			tmp = strtok(NULL, ": ");
 			pwd2.assign(tmp);
-			cout << "merge "<<ID1<<" "<<pwd1<<" "<<ID2<<" "<<pwd2 << endl;
+			int key1 = trie.search(ID1);
+			if(key1 >= 0){
+				int key2 = trie.search(ID2);
+				if(key2 >= 0){
+					if(account[key1].pwd == md5(pwd1)) {
+						if(account[key2].pwd == md5(pwd2)) {
+							account[key1].deposit( account[key2].money );
+							//TODO: leave transfer history
+							trie.remove(ID2);
+							cout << "success, "<<ID1<<" has "<<account[key1].money<<" dollars" << endl;
+						}
+						else{
+							cout << "wrong password2" << endl;
+						}
+					}
+					else{
+						cout << "wrong password1" << endl;
+					}
+				}
+				else {
+					cout << "ID " << ID2 << " not found" << endl;
+				}
+			}
+			else{ 
+				cout << "ID " << ID1 << " not found" << endl;
+			}
 		}
 		else if(strcmp(tmp, "deposit")==0){
 			//deposit [num]
 			tmp = strtok(NULL, ": ");
-			num = atoi(tmp);
-			cout << "deposit [num]" << endl;
+			num = atoll(tmp);
+			cout << "success, "<< account[login_id].deposit(num) <<" dollars in current account" << endl;
 		}
 		else if(strcmp(tmp, "withdraw")==0){
 			//withdraw [num]
 			tmp = strtok(NULL, ": ");
-			num = atoi(tmp);
-			cout << "withdraw [num]" << endl;
+			num = atoll(tmp);
+			if(account[login_id].money >= num ){
+				cout << "success, "<< account[login_id].withdraw(num) <<" dollars left in current account" << endl;
+			}
+			else {
+				cout << "fail, " << account[login_id].money << " dollars only in current account" << endl;
+			}
 		}
 		else if(strcmp(tmp, "transfer")==0){
 			//transfer [ID] [num]
 			tmp = strtok(NULL, ": ");
 			ID.assign(tmp);
 			tmp = strtok(NULL, ": ");
-			num = atoi(tmp);
-			cout << "transfer [ID] [num]" << endl;
+			num = atoll(tmp);
+			int key = trie.search(ID);
+			if(key >= 0) {
+				if(account[login_id].money >= num ){
+					account[key].deposit(num);
+					cout << "success, "<< account[login_id].withdraw(num) <<" dollars left in current account" << endl;
+					//TODO: leave history
+				}
+				else {
+					cout << "fail, " << account[login_id].money << " dollars only in current account" << endl;
+				}
+			}
+			else{
+				cout << "ID " << ID << " not found" << endl;
+			}
 		}
 		else if(strcmp(tmp, "find")==0){
 			//find [wildcard ID]
