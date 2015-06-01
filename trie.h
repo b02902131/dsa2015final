@@ -12,7 +12,7 @@ class Trie{
 	private:
 		struct node
 		{
-			int key;		//if it's not end, key = -1, otherwise key = the word's key
+			long long int key;		//if it's not end, key = -1, otherwise key = the word's key
 			//int prefix_count;
 			struct node * child[ALPHABET_SIZE];
 		}*head;
@@ -32,7 +32,7 @@ class Trie{
 			//head->prefix_count = 0;
 			head->key = -1;		//initialize
 		}
-		void insert(string word, int key){		//insert a word, with a key
+		void insert(string word, long long int key){		//insert a word, with a key
 			node * current = head;
 			//current-> prefix_count++;
 			for (int i=0;i<word.length();++i){
@@ -46,7 +46,7 @@ class Trie{
 			}
 			current->key = key;
 		}
-		int search (string word){
+		long long int search (string word){
 			node * current = head;
 			for(int i=0; i< word.length(); ++i){
 				if(current->child[char2index(word[i])]==NULL) return -1;
@@ -55,7 +55,7 @@ class Trie{
 			return current->key;
 		}
 		//remove function
-		int remove(string word){
+		long long int remove(string word){
 			//find position and key
 			node * current = head;
 			for(int i=0; i< word.length(); ++i){
