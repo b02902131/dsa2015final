@@ -13,7 +13,7 @@ class Trie{
 		struct node
 		{
 			long long int key;		//if it's not end, key = -1, otherwise key = the word's key
-			//int prefix_count;
+			int prefix_count;
 			struct node * child[ALPHABET_SIZE];
 		}*head;
 		int char2index(char c){
@@ -24,24 +24,24 @@ class Trie{
 		}
 		void init_node(struct node * n){
 			n->key = -1;
-			//n->prefix_count = 0;
+			n->prefix_count = 0;
 		}
 	public:
 		void init(){
 			head = new node();
-			//head->prefix_count = 0;
+			head->prefix_count = 0;
 			head->key = -1;		//initialize
 		}
 		void insert(string word, long long int key){		//insert a word, with a key
 			node * current = head;
-			//current-> prefix_count++;
+			current-> prefix_count++;
 			for (int i=0;i<word.length();++i){
-				int letter = char2index( word[i] );	//TODO: here should modify to 62 character
+				int letter = char2index( word[i] );	//here had been modified to 62 character
 				if((current -> child[letter]) == NULL){
 					current->child[letter] = new node();
 					init_node(current->child[letter]);
 				}
-				// current->child[letter]->prefix_count++;
+				current->child[letter]->prefix_count++;
 				current = current -> child[letter];
 			}
 			current->key = key;
@@ -55,20 +55,24 @@ class Trie{
 			return current->key;
 		}
 		//remove function
-		long long int remove(string word){
+		void remove(string word){
 			//find position and key
 			node * current = head;
-			for(int i=0; i< word.length(); ++i){
-				if(current->child[char2index(word[i])]==NULL) return -1;
-				current = current -> child[char2index(word[i])];
+			//check all nodes in the path, prefix_count--, and if prefix_count = 0, set the entry = null
+			current-> prefix_count--;
+			for (int i=0;i<word.length();++i){
+				int letter = char2index( word[i] );	
+				current->child[letter]->prefix_count--;
+				if(current->child[letter]->prefix_count==0) {	//if prefix_count == 0, means there is no more word attach to the node
+					current -> child[letter] = NULL;
+					// cout << ">>>trie 68" << endl;
+					return;
+				}
+				// cout << ">>>trie 71" << endl;
+				current = current -> child[letter];
 			}
-			//if key = -1 , return -1
-			int key = current->key;
-			if(key==-1) return -1;
 			//set the position: key = -1;
 			current->key=-1;
-			//return the key
-			return key;
 		}
 		int words_with_prefix(string prefix){
 			return -1;
