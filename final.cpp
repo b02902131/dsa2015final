@@ -90,6 +90,7 @@ int main(){
 			if(key >= 0) {
 				if(account[key].pwd == md5(pwd)) {
 					trie.remove(ID);
+					id_queue.push_back(key);
 					cout << "success" << endl;
 				}
 				else{
